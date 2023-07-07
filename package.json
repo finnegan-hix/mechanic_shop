@@ -7,5 +7,24 @@
     "mongoose": "^7.3.2",
     "nodemon": "^2.0.22",
     "react-bootstrap": "^2.8.0"
-  }
+  },
+  "name": "mechanic_shop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "npx nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leonel-A-L/mechanic_shop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Leonel-A-L/mechanic_shop/issues"
+  },
+  "homepage": "https://github.com/Leonel-A-L/mechanic_shop#readme",
+  "description": ""
 }
