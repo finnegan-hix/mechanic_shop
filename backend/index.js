@@ -1,17 +1,29 @@
-const express = require("express");
-const bodyparser = require("body-parser");
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+require('dotenv'). config()
 
-const app = express();
+const mechanicRoutes = require('./routes/mechanic')
+const customerRoutes = require('./routes/customer')
+const appointmentRoutes = require('./routes/appointment')
 
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(bodyparser.json());
+const app = express()
 
-require("./routes/appointment")(app);
-require("./routes/mechanic")(app);
-require("./routes/customer")(app);
+//middlewares
+app.use(express.json())
+app.use(cors())
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+//routes
+app.use('/Mechanic', mechanicRoutes)
+app.use('/Customer', customerRoutes)
+app.use('/Appointment', appointmentRoutes)
+
+
+// db connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('DB connected'))
+    .catch(err => console.error(err));
+
+const PORT = process.env.PORT || 8080
+
+app.listen(PORT, console.log(`listening on port ${PORT}`))
