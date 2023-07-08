@@ -1,15 +1,21 @@
-module.exports = (sequelize, DataTypes) => {
-    const Customer = sequelize.define(
-      "Customer",
-      {
-        name: DataTypes.STRING,
-        email: DataTypes.STRING,
-        phone: DataTypes.Integer,
-      },
-      {}
-    );
-    Customer.associate = function(models) {
-      Customer.belongsToMany(models.Mechanic, { through: "Appointment", foreignKey: "customerId" });
-    };
-    return Customer;
-  };
+const mongoose = require('mongoose')
+const { INTEGER } = require('sequelize')
+
+const customerSchema = new mongoose.Schema({
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+        type:String,
+        required:true
+    },
+    email: {
+      type: String
+    },
+    phoneNumber:{
+        type:Number
+    },   
+})
+
+module.exports = mongoose.model('Customer', customerSchema)
