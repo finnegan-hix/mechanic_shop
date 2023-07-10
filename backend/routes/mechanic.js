@@ -5,19 +5,24 @@ const {
     createMechanic,
     deleteMechanicById,
     updateMechanicById,
+    getMechanicAvailability,
+    
 } = require('../controllers/mechanic')
-// GET / get all breads
+// GET / get all appointments
 router.get('/', getAllMechanic)
 
-// GET /:id get bread by id
+router.get('/availability', getMechanicAvailability)
+
+// GET /:id get appointment by id
 router.get('/:id', getMechanicById)
 
-//POST / creat bread
+
+//POST / creat appointment
 router.post('/', createMechanic)
 
 // PUT /:id update
 router.put('/:id', updateMechanicById)
-// DELETE /:id delete bread by id
+// DELETE /:id delete appointment by id
 router.delete('/:id', deleteMechanicById)
 
 module.exports = router
