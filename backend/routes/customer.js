@@ -6,18 +6,19 @@ const {
     deleteCustomerById,
     updateCustomerById,
 } = require('../controllers/customer')
-// GET / get all breads
+// GET / get all customers
 router.get('/', getAllCustomer)
 
-// GET /:id get bread by id
+// GET /:id get customers by id
 router.get('/:id', getCustomerById)
 
-//POST / creat bread
+//POST / create customers
 router.post('/', createCustomer)
 
 // PUT /:id update
 router.put('/:id', updateCustomerById)
-// DELETE /:id delete bread by id
+
+// DELETE /:id delete customer by id
 router.delete('/:id', deleteCustomerById)
 
 module.exports = router
