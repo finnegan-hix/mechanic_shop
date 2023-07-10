@@ -1,4 +1,7 @@
+const { set } = require('mongoose')
 const Mechanic = require('../models/Mechanic')
+const Appointment = require('../models/Appointment')
+// const { DateTime } = require("luxon");
 
 async function getAllMechanic(req, res) {
     try {
@@ -19,6 +22,58 @@ async function getMechanicById(req, res) {
     } catch(error){
         console.log('error fetching mechanic:', error)
         res.json({'message': 'error fetching mechanic'})
+    }
+}
+
+
+// for testing
+// function seeDate(){
+//     const date = new Date("May 11, 2023 21:00:10")    
+//     console.log('date', date)
+//     return date
+// } seeDate()
+
+function isInBuisnessDay(date){   
+    const weekDay = date.getDay()
+    return 1 <= weekDay && weekDay <= 5     
+}
+
+
+// console.log(isInBuisnessDay(seeDate()))
+
+const startHour = 8 //8am
+const endHour = 17 // 5pm
+
+function createAvailableSpots(mechanicId, date){
+    const availableSpots = []
+    for(let i = startHour; i < endHour; i++){
+        availableSpots.push({
+            mechanicId:mechanicId,
+            date: date.toString(),
+            startHour: i,
+        })          
+    }
+    return availableSpots 
+}
+
+async function getMechanicAvailability(req, res){
+    try {        
+        const { mechanic, appointmentDate } = req.query        
+        const businessDay = isInBuisnessDay(new Date(appointmentDate))
+        const appointmentsQuery =  await Appointment.find(req.query)         
+        const potentiallyAvailableSpots = createAvailableSpots(mechanic, appointmentDate)
+
+        if(businessDay != true){
+            res.json([])
+        }
+        else{ 
+            const availableSpots = potentiallyAvailableSpots.filter((spot) => !appointmentsQuery.some((appt) => appt.startHour === spot.startHour ))
+            
+            res.json(availableSpots)
+        }                       
+    } catch(error){
+        console.log('error fetching appointment:', error) 
+        res.json({'message': 'error fetching appointment'})
     }
 }
 
@@ -65,4 +120,5 @@ module.exports = {
     createMechanic,
     deleteMechanicById,
     updateMechanicById,
+    getMechanicAvailability,
 }
