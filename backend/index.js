@@ -18,7 +18,6 @@ app.use('/Mechanic', mechanicRoutes)
 app.use('/Customer', customerRoutes)
 app.use('/Appointment', appointmentRoutes)
 
-
 // db connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('DB connected'))
