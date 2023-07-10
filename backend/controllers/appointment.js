@@ -9,6 +9,15 @@ async function getAllAppointment(req, res) {
         res.json({'message': 'error fetching appointment'})
     }
 }
+async function getAllAvailaleAppointment(req, res){
+    try {        
+        const availableAppointment = await Appointment.findBy(mechanic)        
+        console.log(availableAppointment)
+    } catch(error){
+        console.log('error fetching appointment:', error)
+        res.json({'message': 'error fetching appointment'})
+    }
+}
 
 async function getAppointmentById(req, res) {
     try {
@@ -65,4 +74,5 @@ module.exports = {
     createAppointment,
     deleteAppointmentById,
     updateAppointmentById,
+    getAllAvailaleAppointment,
 }

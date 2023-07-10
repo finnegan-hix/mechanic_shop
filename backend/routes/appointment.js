@@ -5,19 +5,23 @@ const {
     createAppointment,
     deleteAppointmentById,
     updateAppointmentById,
+    getAllAvailaleAppointment,
 } = require('../controllers/appointment')
-// GET / get all breads
+// GET / get all appointments
 router.get('/', getAllAppointment)
 
-// GET /:id get bread by id
+//Get /:mechanic get appointment by mechanic
+// router.get('/mechanic/:id/', getAllAvailaleAppointment)
+
+// GET /:id get appointment by id
 router.get('/:id', getAppointmentById)
 
-//POST / creat bread
+//POST / creat appointment
 router.post('/', createAppointment)
 
 // PUT /:id update
 router.put('/:id', updateAppointmentById)
-// DELETE /:id delete bread by id
+// DELETE /:id delete appointment by id
 router.delete('/:id', deleteAppointmentById)
 
 module.exports = router
