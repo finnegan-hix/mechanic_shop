@@ -5,13 +5,13 @@ const appointmentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'mechanic'
     },
-    customer: {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'customer'
-    },
     appointmentDate: {
       type: Date
     },
+    customer: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'customer'
+    },  
     appointmentTime:{
         type:Number
     },

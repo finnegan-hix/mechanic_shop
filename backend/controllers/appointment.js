@@ -1,4 +1,16 @@
 const Appointment = require('../models/Appointment')
+const Mechanic = require('../models/Mechanic')
+const {
+    getAllMechanic,
+    getMechanicById,
+    createMechanic,
+    deleteMechanicById,
+    updateMechanicById,
+    getMechanicAvailability,
+    isInBuisnessDay,
+    createAvailableSpots,
+    
+} = require('../controllers/mechanic')
 
 async function getAllAppointment(req, res) {
     try {
@@ -31,18 +43,32 @@ async function getAppointmentById(req, res) {
     }
 }
 
+// still wroking on Route
 async function createAppointment(req, res) {
-    
-    try {
+    //  const existingAppointment = await Appointment.find(req.query.mechanic,req.query.appointmentDate, req.query.appointmentTime)
+    // const searchMechanic = await Appointment.find(req.query.mechanic)
+    // console.log('Existing', existingAppointment,'Mechanic', searchMechanic)
+    const existingMechanicAppointment = await (await Appointment.find().where('mechanic').equals(req.body.mechanic)).sort()
+    const { mechanic, appointmentDate, appointmentTime } = req.body     
+    const checkNewAppointment = { mechanic, appointmentDate, appointmentTime }    
+    console.log('TEST', existingMechanicAppointment, 'Hopefully', checkNewAppointment)
+      
+   
+     
+    try {          
+        // if(existingMechanicAppointment.mechanic == checkNewAppointment.mechanic){res.status(400).json({'message': 'appointment already created'})}
+        // else{
         if (!req.body.image) req.body.image = undefined
-        const appointment = await new Appointment(req.body).save()        
-        const id = appointment.id
+        const appointment = await new Appointment(req.body)
+        const id = appointment.id        
         res.status(201).json({ 'message': 'appointment created',id })
-    } catch (error) {
+        }catch (error) {
         console.log('error creating appointment:', error)
         res.json({ 'message': 'error creating appointment' })
     }
 }
+
+
 
 async function updateAppointmentById(req, res) {
     console.log(req.body)

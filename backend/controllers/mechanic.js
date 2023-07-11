@@ -25,21 +25,10 @@ async function getMechanicById(req, res) {
     }
 }
 
-
-// for testing
-// function seeDate(){
-//     const date = new Date("May 11, 2023 21:00:10")    
-//     console.log('date', date)
-//     return date
-// } seeDate()
-
 function isInBuisnessDay(date){   
     const weekDay = date.getDay()
     return 1 <= weekDay && weekDay <= 5     
 }
-
-
-// console.log(isInBuisnessDay(seeDate()))
 
 const startHour = 8 //8am
 const endHour = 17 // 5pm
@@ -121,4 +110,6 @@ module.exports = {
     deleteMechanicById,
     updateMechanicById,
     getMechanicAvailability,
+    isInBuisnessDay,
+    createAvailableSpots,
 }
