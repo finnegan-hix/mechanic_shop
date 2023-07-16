@@ -22,19 +22,42 @@ async function getCustomerById(req, res) {
     }
 }
 
-async function createCustomer(req, res) {
-    
-    try {
-        if (!req.body.image) req.body.image = undefined
-        const customer = await new Customer(req.body).save()        
-        const id = customer.id
-        res.status(201).json({ 'message': 'customer created',id })
-    } catch (error) {
-        console.log('error creating customer:', error)
-        res.json({ 'message': 'error creating customer' })
-    }
-}
 
+
+async function createCustomer(req, res) {
+    const { firstName, lastName, email, phoneNumber } = req.body;
+    const existingUser = await Customer.find({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+    });
+  
+    if (existingUser.length) {
+      res.json({ message: "error user already exists" });
+      return;
+    }
+  
+    try {
+      const customer = new Customer({ firstName, lastName, email, phoneNumber });
+      await customer.save();
+      res.status(201).json({ message: "customer created", id: customer.id });
+    } catch (error) {
+      console.log("error creating customer:", error);
+      res.json({ message: "error creating customer" });
+    }
+  }
+
+  async function userLogin(req, res) {
+    const { email, phoneNumber } = req.body;
+    const existingUser = await Customer.find({ email, phoneNumber });
+  
+    if (!existingUser.length) {
+      res.json({ message: "wrong email or phone number" });
+    } else {
+      res.json({ message: "user loged in" });
+    }
+  }
 async function updateCustomerById(req, res) {
     console.log(req.body)
     try {
@@ -65,4 +88,5 @@ module.exports = {
     createCustomer,
     deleteCustomerById,
     updateCustomerById,
+    userLogin
 }

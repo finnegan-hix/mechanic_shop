@@ -21,4 +21,7 @@ router.put('/:id', updateCustomerById)
 // DELETE /:id delete customer by id
 router.delete('/:id', deleteCustomerById)
 
+// POSTS /login
+router.post('/userlogin', userLogin)
+
 module.exports = router
